@@ -1,17 +1,17 @@
 
 
 //Funcion para borrar los datos de la calculadora
-function borrar(op){
-    if(op=="borrar" || op=="borrarTodo"){
-            num1.value="";
-            num2.value="";
-            resultado.textContent = "0";
-            op=null;
-            console.log(op);
-            return op;
-        }else{
-            return op;
-        }
+function borrarTodo(op){
+    num1.value="";
+    num2.value="";
+    resultado.textContent = "0";
+    op=null;
+    return op;
 }
 
-export {borrar};
+function borrarUltimo(arr){
+    arr.pop();
+    return arr;
+}
+
+export {borrarTodo,borrarUltimo};
