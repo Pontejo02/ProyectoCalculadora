@@ -46,6 +46,7 @@ borr.forEach(n=>{
                 borrarUltimo(arraynum2);
                 num2.value=Number(arraynum2.join(''));
             }else{
+                operacion=null;
                 borrarUltimo(arraynum1);
                 num1.value=Number(arraynum1.join(''));
             }
@@ -72,10 +73,33 @@ numeros.forEach(n =>{
 resul.forEach(n =>{
     n.addEventListener("click",e =>{
         const igual=n.getAttribute("data-op");
-        let resultadoFinal=opera(operacion);
-        resultado.textContent=resultadoFinal;
-    })
-
+        //let resultadoFinal;
+        console.log("Operacion elegida:", operacion);
+            let valor1 = parseFloat(num1.value);
+            let valor2 = parseFloat(num2.value);
+            console.log(valor1,valor2);
+            if (Number.isNaN(valor1)){
+                valor1=0;
+                num1.value=0;
+            }else if(Number.isNaN(valor2)){
+                valor2=valor1;
+                num2.value=valor1;
+                arraynum2.push(valor1);
+                num2.value=Number(arraynum2.join(''));
+            }else if(Number.isNaN(valor1) && Number.isNaN(valor2)){
+                valor1=0;
+                num1.value=0;
+                valor2=0;
+                num2.value=0;
+            }
+            
+        if (operacion===null){
+            resultado.textContent=0;
+        }else{
+            let resultadoFinal=opera(operacion, valor1, valor2);
+            resultado.textContent=resultadoFinal;
+        }
+})
 })
 
 
