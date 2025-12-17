@@ -21,9 +21,11 @@ const resul= document.querySelectorAll(".igual");
 const num1= document.getElementById("num1");
 const num2= document.getElementById("num2");
 const resultado= document.getElementById("resultado");
+const listaHistorial = document.getElementById("lista-historial");
 
 
 let operacion=null;
+let historial=[];
 //por cada uno le añadimos el evento del click, siempre cogeriamos el nombre del atributo seleccionado.
 botones.forEach(n =>{
     n.addEventListener("click",e =>{
@@ -36,6 +38,39 @@ botones.forEach(n =>{
         operacion=op;
         })
     })
+
+function convertirSimboloAOperacion(simbolo) {
+    switch (simbolo) {
+        case "+": return "sumar";
+        case "-": return "restar";
+        case "x": return "multiplicar";
+        case "÷": return "dividir";
+        default: return null;
+    }
+}
+
+function actualizarHistorial() {
+    listaHistorial.innerHTML = "";
+
+    historial.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        li.dataset.index=index;
+        li.style.cursor = "pointer";
+
+        li.addEventListener("click", () => {
+            console.log(historial);
+            console.log(index);
+            let historialseparado=historial[index].split(' ');
+            console.log(historialseparado);
+            num1.value=historialseparado[0];
+            num2.value=historialseparado[2];
+            operacion=convertirSimboloAOperacion(historialseparado[1]);
+            resultado.textContent=historialseparado[4];
+        });
+        listaHistorial.appendChild(li);
+    });
+}
 
 borr.forEach(n=>{
     n.addEventListener("click",e =>{
@@ -98,6 +133,14 @@ resul.forEach(n =>{
         }else{
             let resultadoFinal=opera(operacion, valor1, valor2);
             resultado.textContent=resultadoFinal;
+            const simbolos = {
+                sumar: "+",
+                restar: "-",
+                multiplicar: "×",
+                dividir: "÷"
+                };
+            historial.push(`${valor1} ${simbolos[operacion]} ${valor2} = ${resultadoFinal}`);
+            actualizarHistorial();
         }
 })
 })
